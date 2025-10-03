@@ -1,0 +1,50 @@
+# Python-generated files
+.env
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Documentation build output
+site/
+htmlcov/
+.coverage
+.pytest_cache/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+
+# Project specific
+data/
+logs/
+*.log
+*.db
+*.sqlite
+*.sqlite3
+
+# Vector stores
+faiss_index/
+chroma_db/
+*.pkl
+*.pickle
+
+# Jupyter
+.ipynb_checkpoints/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Temporary files
+tmp/
+temp/
