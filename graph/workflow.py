@@ -62,17 +62,36 @@ class FinnieWorkflow:
         workflow.add_node("compliance", self._compliance_node)
         workflow.add_node("responder", self._responder_node)
         
-        # Add edges
-        workflow.add_edge("router", "tutor")
-        workflow.add_edge("router", "portfolio")
-        workflow.add_edge("router", "market")
+        # Add entry point from START to router
+        workflow.set_entry_point("router")
+        
+        # Add conditional edges from router to specific agents
+        workflow.add_conditional_edges(
+            "router",
+            self._route_to_agent,
+            {
+                "tutor": "tutor",
+                "portfolio": "portfolio", 
+                "market": "market"
+            }
+        )
+        
+        # Add edges from agents to compliance
         workflow.add_edge("tutor", "compliance")
         workflow.add_edge("portfolio", "compliance")
         workflow.add_edge("market", "compliance")
+        
+        # Add edge from compliance to responder
         workflow.add_edge("compliance", "responder")
+        
+        # Add edge from responder to END
         workflow.add_edge("responder", END)
         
         return workflow.compile()
+    
+    def _route_to_agent(self, state: FinnieState) -> str:
+        """Determine which agent to route to based on the current agent."""
+        return state.get("current_agent", "tutor")
     
     def _router_node(self, state: FinnieState) -> FinnieState:
         """Route the query to the appropriate agent."""
@@ -92,7 +111,7 @@ class FinnieWorkflow:
             # Route the query
             agent_type = self.orchestrator.route_query(agent_state)
             
-            # Update state
+            # Update state with routing information
             state["current_agent"] = agent_type.value
             state["intent"] = agent_state.intent
             state["confidence"] = agent_state.confidence
@@ -111,6 +130,10 @@ class FinnieWorkflow:
         """Process query through tutor agent."""
         if state["current_agent"] != "tutor":
             return state
+        
+        # Ensure analysis dictionary exists
+        if "analysis" not in state:
+            state["analysis"] = {}
         
         try:
             agent_state = AgentState(
@@ -144,6 +167,10 @@ class FinnieWorkflow:
         if state["current_agent"] != "portfolio":
             return state
         
+        # Ensure analysis dictionary exists
+        if "analysis" not in state:
+            state["analysis"] = {}
+        
         try:
             agent_state = AgentState(
                 user_id=state["user_id"],
@@ -176,6 +203,10 @@ class FinnieWorkflow:
         if state["current_agent"] != "market":
             return state
         
+        # Ensure analysis dictionary exists
+        if "analysis" not in state:
+            state["analysis"] = {}
+        
         try:
             agent_state = AgentState(
                 user_id=state["user_id"],
@@ -206,6 +237,10 @@ class FinnieWorkflow:
     def _compliance_node(self, state: FinnieState) -> FinnieState:
         """Process response through compliance agent."""
         try:
+            # Ensure analysis dictionary exists
+            if "analysis" not in state:
+                state["analysis"] = {}
+            
             # Get the response from analysis
             response = state["analysis"].get("response", "")
             agent_type = state["current_agent"] or "general"
@@ -227,12 +262,19 @@ class FinnieWorkflow:
                 "disclaimers": ["This response has not been compliance reviewed."],
                 "risk_warnings": ["Please consult with a financial advisor before making investment decisions."]
             }
+            # Ensure analysis exists even on error
+            if "analysis" not in state:
+                state["analysis"] = {}
         
         return state
     
     def _responder_node(self, state: FinnieState) -> FinnieState:
         """Format the final response."""
         try:
+            # Ensure analysis dictionary exists
+            if "analysis" not in state:
+                state["analysis"] = {}
+            
             response = state["analysis"].get("response", "")
             sources = state.get("sources", [])
             compliance = state.get("compliance", {})

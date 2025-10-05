@@ -74,7 +74,7 @@ def render():
             })
         
         df_watchlist = pd.DataFrame(watchlist_data)
-        st.dataframe(df_watchlist, use_container_width=True)
+        st.dataframe(df_watchlist, width='stretch')
         
         # Watchlist chart
         st.subheader("📊 Watchlist Performance")
@@ -101,7 +101,7 @@ def render():
             hovermode='x unified'
         )
         
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
     
     # Market heatmap
     st.subheader("🔥 Sector Heatmap")
@@ -124,7 +124,7 @@ def render():
         title="Sector Performance Today"
     )
     
-    st.plotly_chart(fig_heatmap, use_container_width=True)
+    st.plotly_chart(fig_heatmap, width='stretch')
     
     # News feed
     st.subheader("📰 Market News")
@@ -214,5 +214,5 @@ def render():
         else:
             return 'background-color: #e8f5e8'
     
-    styled_calendar = df_calendar.style.applymap(color_impact, subset=['Impact'])
-    st.dataframe(styled_calendar, use_container_width=True)
+    styled_calendar = df_calendar.style.map(color_impact, subset=['Impact'])
+    st.dataframe(styled_calendar, width='stretch')

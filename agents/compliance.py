@@ -215,5 +215,6 @@ class ComplianceAgent:
         # Update the agent response
         agent_response["response"] = sanitized_response
         agent_response["compliance"] = compliance_metadata
+        agent_response["approved"] = compliance_checks["approved"]
         
         return agent_response

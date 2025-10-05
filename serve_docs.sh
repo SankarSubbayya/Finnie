@@ -9,5 +9,5 @@ export JUPYTER_PLATFORM_DIRS=1
 # Suppress Python warnings related to jupyter and nbconvert
 export PYTHONWARNINGS="ignore::DeprecationWarning:jupyter_core.utils,ignore::DeprecationWarning:traitlets.traitlets,ignore::DeprecationWarning:nbconvert.exporters.templateexporter"
 
-# Run mkdocs serve with the dev server
-mkdocs serve --dev-addr=localhost:8002 
+# Run mkdocs serve with the dev server using uv
+uv run mkdocs serve --dev-addr=localhost:8002 

@@ -52,7 +52,7 @@ finnie/
 ├── docs/                         # Documentation
 │   ├── Financial Engine/         # Package documentation
 │   ├── notebooks/                # Jupyter notebooks
-│   └── project-guide/            # Guides and tutorials
+│   └── deployment/               # Deployment guides
 ├── tests/                        # Test suite
 └── configuration files           # Project configuration
 ```
@@ -100,8 +100,8 @@ finnie/
 
 ### 🎯 **Learning Resources**
 - [Jupyter Notebooks](notebooks/) - Interactive tutorials and examples
-- [Project Guide](project-guide/) - Step-by-step guides and best practices
-- [Tips and Tricks](project-guide/tips-and-tricks/) - Advanced techniques and troubleshooting
+- [Deployment Guides](deployment/) - AWS and GitHub deployment guides
+- [API Documentation](Financial%20Engine/) - Complete API reference
 
 ## Architecture Overview
 
@@ -164,7 +164,7 @@ graph TB
 
 ### 🐛 **Troubleshooting**
 - Run `python src/test_setup.py` to diagnose environment issues
-- Check the [Tips and Tricks](project-guide/tips-and-tricks/) for common solutions
+- Check the [API Documentation](Financial%20Engine/) for detailed function information
 - Review error messages carefully - they often contain specific guidance
 
 ### 💬 **Support**

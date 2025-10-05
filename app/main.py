@@ -18,13 +18,33 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))
 
-from app.pages import chat, portfolio, markets, learn
+from app.views import chat, portfolio, markets, learn
 from app.utils import setup_page_config, initialize_session_state
 
 def main():
     """Main application entry point."""
     setup_page_config()
     initialize_session_state()
+    
+    # Hide the default Streamlit navigation
+    st.markdown("""
+        <style>
+        /* Hide Streamlit's default navigation */
+        section[data-testid="stSidebar"] > div:first-child > div:first-child {
+            display: none;
+        }
+        /* Hide the pages navigation in the top */
+        .stDeployButton {display: none;}
+        header[data-testid="stHeader"] {display: none;}
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        /* Additional CSS to hide page nav */
+        div[data-testid="stDecoration"] {display: none;}
+        div[data-testid="stStatusWidget"] {display: none;}
+        /* Hide the hamburger menu */
+        button[kind="header"] {display: none;}
+        </style>
+    """, unsafe_allow_html=True)
     
     # Sidebar navigation
     with st.sidebar:
@@ -37,18 +57,13 @@ def main():
         selected_tab = option_menu(
             menu_title=None,
             options=["Chat", "Portfolio", "Markets", "Learn"],
-            icons=["chat-dots", "pie-chart", "graph-up", "book"],
+            icons=["chat", "pie-chart", "graph-up", "book"],
             menu_icon="cast",
             default_index=0,
             styles={
                 "container": {"padding": "0!important", "background-color": "#fafafa"},
-                "icon": {"color": "orange", "font-size": "25px"},
-                "nav-link": {
-                    "font-size": "16px",
-                    "text-align": "left",
-                    "margin": "0px",
-                    "--hover-color": "#eee",
-                },
+                "icon": {"color": "orange", "font-size": "20px"},
+                "nav-link": {"font-size": "16px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
                 "nav-link-selected": {"background-color": "#02ab21"},
             }
         )

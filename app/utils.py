@@ -18,6 +18,10 @@ def setup_page_config():
 
 def initialize_session_state():
     """Initialize session state variables."""
+    if "user_id" not in st.session_state:
+        import uuid
+        st.session_state.user_id = str(uuid.uuid4())
+    
     if "messages" not in st.session_state:
         st.session_state.messages = []
     

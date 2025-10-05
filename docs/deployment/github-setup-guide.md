@@ -245,7 +245,7 @@ docker run -p 8501:8501 finnie
 ```
 
 ### AWS Deployment
-See [AWS Deployment Guide](docs/deployment/aws-deployment-guide.md) for detailed instructions.
+See [AWS Deployment Guide](aws-deployment-guide.md) for detailed instructions.
 
 ## 🤝 Contributing
 

@@ -208,7 +208,7 @@ classDiagram
     class ProjectDocumentation {
         +index.md: main project page
         +notebooks/: Jupyter notebooks
-        +project-guide/: guides and tips
+        +deployment/: deployment guides
         +apidocs/: API documentation
     }
 
